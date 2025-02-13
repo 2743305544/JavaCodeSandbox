@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: shiyi-code-sandbox
+server:
+  port: 8090
+docker:
+  enable: false
