@@ -28,4 +28,13 @@ public class SysConstant {
 
     //Docker 容器 CPU 数量
     public static final long DOCKER_CPU_COUNT = 1L;
+
+    // auth request header
+    public static final String AUTH_REQUEST_HEADER = "Authorization";
+
+    // auth request algorithm
+    private static final String ALGORITHM = "AES";
+
+    // auth request value
+    public static final String AUTH_REQUEST_VALUE = "Basic YWRtaW46YWRtaW4=";
 }
