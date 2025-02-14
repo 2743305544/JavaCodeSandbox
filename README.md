@@ -28,7 +28,7 @@
 - 操作系统：
   - Linux (推荐 Ubuntu 20.04+)
   - Windows 10/11 或 Windows Server 2019+
-- 该代码开发环境为 IntelliJ IDEA 2023.3，Windows 11 企业版，Docker 26.1.3，maven 3.8.4，JDK 21.0.6，Ubuntu 22.04 LTS
+- 该代码开发环境为 IntelliJ IDEA 2023.3，Windows 11 企业版，Docker 26.1.3，maven 3.8.4，JDK 21.0.6，Ubuntu 24.04 LTS
 ------
 
 ## � 快速开始
