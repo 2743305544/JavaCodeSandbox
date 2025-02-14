@@ -1,11 +1,15 @@
 package com.shiyi.shiyicodesandbox.utils;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
+import com.shiyi.shiyicodesandbox.model.ExecuteCodeResponse;
 import com.shiyi.shiyicodesandbox.model.ExecuteMessage;
+import com.shiyi.shiyicodesandbox.model.JudgeInfo;
 
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -43,7 +47,12 @@ public class ProcessUtils {
                 while ((errorOutputLine = ErrorbufferedReader.readLine()) != null) {
                     errorOutputStringBuilder.append(errorOutputLine);
                 }
-                executeMessage.setErrorMessage(errorOutputStringBuilder.toString());
+                ExecuteCodeResponse executeCodeResponse = new ExecuteCodeResponse();
+                executeCodeResponse.setOutputList(new ArrayList<>());
+                executeCodeResponse.setMessage(compileOutputStringBuilder.toString());
+                executeCodeResponse.setStatus(2);
+                executeCodeResponse.setJudgeInfo(new JudgeInfo());
+                executeMessage.setErrorMessage(JSONUtil.toJsonStr(executeCodeResponse));
                 bufferedReader.close();
                 ErrorbufferedReader.close();
             }
@@ -68,9 +77,9 @@ public class ProcessUtils {
 //            String[] s =args.split(" ");
 //            String join = StrUtil.join("\n", s) +"\n";
 //            outputStreamWriter.write(join);
+            long[] memory = {getMemoryByPid(process.pid())};
             outputStreamWriter.write(args + System.lineSeparator());
-            final long[] memory = {getMemoryByPid(process.pid())};
-            // 启动一个线程 每隔100ms获取一次内存使用情况
+            // 启动一个线程 每隔20ms获取一次内存使用情况
             Thread thread = getThread(process, memory);
             outputStreamWriter.flush();
             StringBuilder compileOutputStringBuilder = new StringBuilder();
@@ -102,7 +111,7 @@ public class ProcessUtils {
         Thread thread = new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(20);
                     if (process.isAlive()) {
                         memory[0] = Math.max(memory[0], getMemoryByPid(process.pid()));
                     }

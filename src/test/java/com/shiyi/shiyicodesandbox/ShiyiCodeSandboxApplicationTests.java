@@ -37,8 +37,8 @@ class ShiyiCodeSandboxApplicationTests {
         JavaNativeCodeSandBox javaNativeCodeSandBox = new JavaNativeCodeSandBox();
         ExecuteCodeRequest request = new ExecuteCodeRequest();
         request.setInputList(Arrays.asList("1 2", "2 3"));
-//        request.setCode(ResourceUtil.readStr("otherSimple/Main.java", StandardCharsets.UTF_8));
-        request.setCode(ResourceUtil.readStr("simple/Main.java",StandardCharsets.UTF_8));
+        request.setCode(ResourceUtil.readStr("otherSimple/Main.java", StandardCharsets.UTF_8));
+//        request.setCode(ResourceUtil.readStr("simple/Main.java",StandardCharsets.UTF_8));
         request.setLanguage("java");
         request.setTime(1000);
         ExecuteCodeResponse executeCodeResponse = javaNativeCodeSandBox.executeCode(request);

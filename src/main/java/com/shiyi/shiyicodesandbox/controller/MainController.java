@@ -49,7 +49,9 @@ public class MainController {
 
     @PostMapping("/native/executeCode")
     public ExecuteCodeResponse nativeExecuteCode(@RequestBody @NonNull ExecuteCodeRequest executeCodeRequest) {
-        return javaNativeCodeSandBox.executeCode(executeCodeRequest);
+        ExecuteCodeResponse executeCodeResponse = javaNativeCodeSandBox.executeCode(executeCodeRequest);
+        System.out.println("executeCodeResponse: " + executeCodeResponse.toString());
+        return executeCodeResponse;
     }
 
     @PostMapping("/docker/executeCode")

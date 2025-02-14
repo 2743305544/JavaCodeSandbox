@@ -91,7 +91,7 @@ public class JavaNativeCodeSandBox implements CodeSandbox {
         File userCodeFile = FileUtil.writeString(code, userCodeFileName, StandardCharsets.UTF_8);
         String compileCmd = String.format(SysConstant.COMPILE_CMD, userCodeFile.getAbsolutePath());
         ExecuteMessage executeMessage1 = runProcess(globalCodePathName, compileCmd);
-        if(executeMessage1.getExitValue() == -1){
+        if(executeMessage1.getExitValue() == -1 || executeMessage1.getExitValue() == 1){
             return JSONUtil.toBean(executeMessage1.getErrorMessage(), ExecuteCodeResponse.class);
         }
         List<ExecuteMessage> executeCodeResponses = new ArrayList<>();
@@ -107,8 +107,10 @@ public class JavaNativeCodeSandBox implements CodeSandbox {
         long maxMemory = 0;
         for (ExecuteMessage executeCodeResponse1 : executeCodeResponses) {
             // 懒得重构了，飞线了
-            if (executeCodeResponse1.getExitValue() == -1) {
-                return JSONUtil.toBean(executeCodeResponse1.getErrorMessage(), ExecuteCodeResponse.class);
+            if ( Objects.nonNull(executeCodeResponse1.getExitValue())) {
+                if (executeCodeResponse1.getExitValue() == -1) {
+                    return JSONUtil.toBean(executeCodeResponse1.getErrorMessage(), ExecuteCodeResponse.class);
+                }
             }
                 String errorMessage = executeCodeResponse1.getErrorMessage();
                 maxTime = Math.max(maxTime, executeCodeResponse1.getTime());
